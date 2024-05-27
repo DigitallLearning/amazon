@@ -43,4 +43,18 @@ app.get("/",async(req,resp)=>{
     const data=await pSchema.find()
     resp.send(data)
 })
+app.get("/:key",async(req,resp)=>{
+  // resp.send(req.params.key)
+   const data=await pSchema.find({pid:req.params.key})
+   resp.send(data)
+})
+app.get("/search/:key",async(req,resp)=>{
+     //resp.send(req.params.key)
+     const data=await pSchema.find({
+        "$or":[
+            {"pcat":{$regex:req.params.key}}
+        ]
+     })
+     resp.send(data)
+  })
 app.listen(4000)
